@@ -112,7 +112,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
         </div>
 
         {/* Navigation List */}
-        <div className="flex-1 overflow-y-auto px-4 py-4 space-y-1">
+        <nav aria-label="Main Navigation" className="flex-1 overflow-y-auto px-4 py-4 space-y-1">
           <div className="text-[11px] font-semibold uppercase tracking-wider text-blue-200/70 px-3 py-1">
             GIS Core
           </div>
@@ -188,7 +188,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
               </button>
             );
           })}
-        </div>
+        </nav>
 
         {/* Footer Navigation: Settings */}
         <div className="border-t border-blue-400/20 p-4">

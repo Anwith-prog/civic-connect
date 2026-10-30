@@ -425,6 +425,14 @@ function CivicConnectApp() {
         isLargeText ? 'text-base' : 'text-sm'
       }`}
     >
+      {/* Screen Reader Skip Navigation Link */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:rounded-xl focus:bg-blue-600 focus:px-4 focus:py-2 focus:text-white focus:shadow-2xl focus:outline-hidden"
+      >
+        Skip to main content
+      </a>
+
       <div className="flex h-screen overflow-hidden">
         {/* 1. Left Royal Blue GIS Navigation Sidebar */}
         <Sidebar
@@ -471,7 +479,7 @@ function CivicConnectApp() {
           />
 
           {/* Main View Area */}
-          <main className="flex-1 p-4 sm:p-6 lg:p-8 space-y-6">
+          <main id="main-content" tabIndex={-1} className="flex-1 p-4 sm:p-6 lg:p-8 space-y-6">
             {currentTab === 'dashboard' && (
               <DashboardView
                 complaints={complaints}

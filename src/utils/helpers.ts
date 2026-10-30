@@ -54,6 +54,11 @@ export function getStatusBadgeStyle(status: ComplaintStage) {
   }
 }
 
+export function getStatusBadgeColor(status: ComplaintStage): string {
+  const style = getStatusBadgeStyle(status);
+  return `${style.bg} ${style.text} ${style.border}`;
+}
+
 export function getPriorityBadge(priority: Priority) {
   switch (priority) {
     case 'Emergency':
@@ -65,6 +70,10 @@ export function getPriorityBadge(priority: Priority) {
     case 'Low':
       return 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 border border-emerald-300';
   }
+}
+
+export function getPriorityBadgeColor(priority: Priority): string {
+  return getPriorityBadge(priority);
 }
 
 export function getCategoryColor(category: ComplaintCategory) {
@@ -91,4 +100,33 @@ export function getCategoryColor(category: ComplaintCategory) {
     default:
       return '#64748b';
   }
+}
+
+/** Sanitize HTML text input for XSS safety */
+export function sanitizeInput(input: string): string {
+  if (!input) return '';
+  return String(input)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#x27;')
+    .replace(/\//g, '&#x2F;')
+    .trim();
+}
+
+/** Calculate SLA resolution time average in hours */
+export function calculateAverageResolutionHours(
+  records: Array<{ createdAt: string; resolvedAt?: string }>
+): number {
+  const resolved = records.filter((r) => r.resolvedAt);
+  if (resolved.length === 0) return 24;
+
+  const totalMs = resolved.reduce((acc, curr) => {
+    const start = new Date(curr.createdAt).getTime();
+    const end = new Date(curr.resolvedAt!).getTime();
+    return acc + Math.max(0, end - start);
+  }, 0);
+
+  return Math.round(totalMs / (resolved.length * 1000 * 60 * 60));
 }
