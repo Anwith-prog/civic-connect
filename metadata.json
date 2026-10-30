@@ -1,0 +1,10 @@
+{
+  "name": "CivicConnect - Smart Community Complaint Management System",
+  "description": "CivicConnect empowers citizens, city administrators, and field staff to report, track, vote, volunteer, and resolve civic complaints with live GIS monitoring and community rewards.",
+  "requestFramePermissions": [
+    "geolocation"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
