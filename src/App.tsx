@@ -11,7 +11,6 @@ import { ReportComplaintModal } from './components/ReportComplaintModal';
 import { CivicChatbotModal } from './components/CivicChatbotModal';
 import { EmergencyHelplineModal } from './components/EmergencyHelplineModal';
 import { SettingsModal } from './components/SettingsModal';
-import { ProjectFolderDrawer } from './components/ProjectFolderDrawer';
 import { AuthModal } from './components/AuthModal';
 import { LogoutConfirmModal } from './components/LogoutConfirmModal';
 import { SessionManagerModal } from './components/SessionManagerModal';
@@ -75,7 +74,6 @@ function CivicConnectApp() {
   const [isChatbotOpen, setIsChatbotOpen] = useState(false);
   const [isEmergencyModalOpen, setIsEmergencyModalOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-  const [isFolderDrawerOpen, setIsFolderDrawerOpen] = useState(false);
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
   const [isSessionManagerOpen, setIsSessionManagerOpen] = useState(false);
 
@@ -468,7 +466,6 @@ function CivicConnectApp() {
             onMarkNotificationsRead={handleMarkNotificationsRead}
             onSelectComplaint={(id) => setActiveComplaintId(id)}
             onOpenSettings={() => setIsSettingsOpen(true)}
-            onToggleFolderDrawer={() => setIsFolderDrawerOpen(!isFolderDrawerOpen)}
             onOpenLogoutModal={() => setIsLogoutModalOpen(true)}
             onOpenSessionManager={() => setIsSessionManagerOpen(true)}
           />
@@ -718,12 +715,6 @@ function CivicConnectApp() {
       <SessionManagerModal
         isOpen={isSessionManagerOpen}
         onClose={() => setIsSessionManagerOpen(false)}
-      />
-
-      {/* Floating Pull/Drag Project Folder Drawer */}
-      <ProjectFolderDrawer
-        isOpen={isFolderDrawerOpen}
-        onToggle={() => setIsFolderDrawerOpen(!isFolderDrawerOpen)}
       />
     </div>
   );

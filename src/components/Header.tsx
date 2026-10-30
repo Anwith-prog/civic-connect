@@ -36,7 +36,6 @@ interface HeaderProps {
   onMarkNotificationsRead: () => void;
   onSelectComplaint: (id: string) => void;
   onOpenSettings: () => void;
-  onToggleFolderDrawer: () => void;
   onOpenLogoutModal: () => void;
   onOpenSessionManager: () => void;
 }
@@ -58,7 +57,6 @@ export const Header: React.FC<HeaderProps> = ({
   onMarkNotificationsRead,
   onSelectComplaint,
   onOpenSettings,
-  onToggleFolderDrawer,
   onOpenLogoutModal,
   onOpenSessionManager,
 }) => {
@@ -180,16 +178,6 @@ export const Header: React.FC<HeaderProps> = ({
           <Download className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" />
           <span className="hidden sm:inline">Download ZIP</span>
         </a>
-
-        {/* Pull/Drag Folder Drawer Button */}
-        <button
-          onClick={onToggleFolderDrawer}
-          className="flex items-center gap-1.5 rounded-lg border border-blue-200 bg-blue-50 px-2.5 py-1.5 text-xs font-bold text-blue-700 hover:bg-blue-100 dark:border-blue-800 dark:bg-blue-950/60 dark:text-blue-300 transition-colors"
-          title="Pull open project folder drawer"
-        >
-          <span>📁</span>
-          <span className="hidden sm:inline">Folder Drawer</span>
-        </button>
 
         {/* Accessibility Large Text */}
         <button
