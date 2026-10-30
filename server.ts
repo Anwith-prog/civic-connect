@@ -51,6 +51,44 @@ const authLimiter = rateLimit({
   message: { success: false, message: 'Too many authentication attempts. Please wait 15 minutes.' },
 });
 
+// Security Headers & Policy Middleware
+app.use((req, res, next) => {
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'SAMEORIGIN');
+  res.setHeader('X-XSS-Protection', '1; mode=block');
+  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+  res.setHeader('Permissions-Policy', 'geolocation=(self), camera=(self)');
+  next();
+});
+
+// Recursive Input Sanitization Middleware (XSS Protection)
+function sanitizeValue(val: any): any {
+  if (typeof val === 'string') {
+    return val
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/javascript:/gi, '')
+      .replace(/onerror=/gi, '')
+      .replace(/onload=/gi, '')
+      .trim();
+  }
+  if (typeof val === 'object' && val !== null) {
+    for (const key in val) {
+      if (Object.prototype.hasOwnProperty.call(val, key)) {
+        val[key] = sanitizeValue(val[key]);
+      }
+    }
+  }
+  return val;
+}
+
+app.use((req, res, next) => {
+  if (req.body && typeof req.body === 'object') {
+    req.body = sanitizeValue(req.body);
+  }
+  next();
+});
+
 app.use('/api/', apiLimiter);
 app.use('/api/auth/', authLimiter);
 
